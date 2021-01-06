@@ -1,18 +1,18 @@
 {
-  "name": "@divlook/condition",
+  "name": "@divlook/ifjs",
   "version": "0.0.0",
   "description": "A nice conditional statement",
   "keywords": [],
-  "main": "dist/condition.umd.js",
-  "module": "dist/condition.es5.js",
-  "typings": "dist/types/condition.d.ts",
+  "main": "dist/ifjs.umd.js",
+  "module": "dist/ifjs.es5.js",
+  "typings": "dist/types/ifjs.d.ts",
   "files": [
     "dist"
   ],
   "author": "uihyeon.cha <uihyeon.cha@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/divlook/condition.git"
+    "url": "git+https://github.com/divlook/ifjs.git"
   },
   "license": "MIT",
   "engines": {
