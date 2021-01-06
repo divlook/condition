@@ -7,44 +7,42 @@ describe('Condition', () => {
         })
 
         it('파라미터에 콜백을 입력하여 조건을 등록할 수 있습니다.', () => {
-            expect(() => {
+            expect(async () => {
                 const condition = new Condition(() => true)
-                condition.is.true()
+                await condition.is.true()
             }).not.toThrow()
         })
 
-        it('`is.true()` 메서드는 조건을 계산한 뒤 결과가 참이면 `true`를 반환합니다. ', () => {
+        it('`is.true()` 메서드는 조건을 계산한 뒤 결과가 참이면 `true`를 반환합니다. ', async () => {
             const condition = new Condition(() => true)
 
-            expect(condition.is.true()).toBeTruthy()
+            expect(await condition.is.true()).toBeTruthy()
         })
-        it('`is.false()` 메서드는 조건을 계산한 뒤 결과가 거짓이면 `true`를 반환합니다. ', () => {
+        it('`is.false()` 메서드는 조건을 계산한 뒤 결과가 거짓이면 `true`를 반환합니다. ', async () => {
             const condition = new Condition(() => false)
 
-            expect(condition.is.false()).toBeTruthy()
+            expect(await condition.is.false()).toBeTruthy()
         })
 
         it('등록된 조건이 없는 상태에서 `is` 메서드를 사용하면 에러가 발생합니다.', () => {
             const condition = new Condition()
 
-            expect(() => {
-                condition.is.true()
-            }).toThrow()
+            expect(condition.is.true()).rejects.toBeDefined()
         })
 
-        it('`and/or` 메서드를 사용하여 조건을 추가할 수 있습니다.', () => {
+        it('`and/or` 메서드를 사용하여 조건을 추가할 수 있습니다.', async () => {
             const condition = new Condition()
 
             condition.and(() => false)
             condition.or(() => false)
 
-            expect(condition.is.false()).toBeTruthy()
+            expect(await condition.is.false()).toBeTruthy()
         })
 
-        it('`and/or` 메서드는 체인방식으로도 사용할 수 있습니다.', () => {
+        it('`and/or` 메서드는 체인방식으로도 사용할 수 있습니다.', async () => {
             const condition = new Condition().and(() => false).or(() => false)
 
-            expect(condition.is.false()).toBeTruthy()
+            expect(await condition.is.false()).toBeTruthy()
         })
 
         it('`reset` 메서드를 사용하여 등록된 조건을 지울 수 있습니다.', () => {
@@ -53,14 +51,12 @@ describe('Condition', () => {
                 .or(() => false)
                 .reset()
 
-            expect(() => {
-                condition.is.false()
-            }).toThrow()
+            expect(condition.is.false()).rejects.toBeDefined()
         })
     })
 
     describe('Sub Condition', () => {
-        it('(true || false) && false', () => {
+        it('(true || false) && false', async () => {
             const condition = new Condition()
 
             condition.and(sub => {
@@ -71,10 +67,10 @@ describe('Condition', () => {
 
             condition.and(() => false)
 
-            expect(condition.is.false()).toBeTruthy()
+            expect(await condition.is.false()).toBeTruthy()
         })
 
-        it('(false || false) && false', () => {
+        it('(false || false) && false', async () => {
             const condition = new Condition()
 
             condition.and(sub => {
@@ -86,22 +82,40 @@ describe('Condition', () => {
 
             condition.or(() => false)
 
-            expect(condition.is.false()).toBeTruthy()
+            expect(await condition.is.false()).toBeTruthy()
         })
 
-        it('(false || false) || true', () => {
+        it('(false || false) || true', async () => {
             const condition = new Condition()
 
             condition.and(sub => {
-                return sub()
-                    .and(() => false)
+                return sub(() => false)
                     .or(() => false)
                     .is.true()
             })
 
             condition.or(() => true)
 
-            expect(condition.is.true()).toBeTruthy()
+            expect(await condition.is.true()).toBeTruthy()
+        })
+    })
+
+    describe('Async', () => {
+        it('Promise', async () => {
+            const condition = new Condition(sub => {
+                return sub()
+                    .and(() => true)
+                    .and(() => Promise.resolve(true))
+                    .and(
+                        () =>
+                            new Promise(resolve => {
+                                setTimeout(() => resolve(true), 1000)
+                            })
+                    )
+                    .is.true()
+            })
+
+            expect(await condition.is.true()).toBeTruthy()
         })
     })
 })

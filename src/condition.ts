@@ -35,15 +35,15 @@ export class Condition {
         return this
     }
 
-    private true() {
-        return this.execute() === true
+    private async true() {
+        return (await this.execute()) === true
     }
 
-    private false() {
-        return this.execute() === false
+    private async false() {
+        return (await this.execute()) === false
     }
 
-    private execute() {
+    private async execute() {
         let result: boolean | null = null
 
         if (this.pipe.length === 0) {
@@ -53,7 +53,7 @@ export class Condition {
         for (const operator of this.pipe) {
             const IS_AND = operator.type === 'and'
             const IS_OR = operator.type === 'or'
-            const value = operator.callback(condition => {
+            const value = await operator.callback(condition => {
                 return new Condition(condition)
             })
 
