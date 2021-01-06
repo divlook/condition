@@ -42,9 +42,7 @@ describe('Condition', () => {
         })
 
         it('`and/or` 메서드는 체인방식으로도 사용할 수 있습니다.', () => {
-            const condition = new Condition()
-                .and(() => false)
-                .or(() => false)
+            const condition = new Condition().and(() => false).or(() => false)
 
             expect(condition.is.false()).toBeTruthy()
         })
@@ -65,10 +63,10 @@ describe('Condition', () => {
         it('(true || false) && false', () => {
             const condition = new Condition()
 
-            condition.and((sub) => {
-                sub.and(() => true)
-                sub.or(() => false)
-                return sub.is.true()
+            condition.and(sub => {
+                return sub(() => true)
+                    .or(() => false)
+                    .is.true()
             })
 
             condition.and(() => false)
@@ -79,10 +77,11 @@ describe('Condition', () => {
         it('(false || false) && false', () => {
             const condition = new Condition()
 
-            condition.and((sub) => {
-                sub.and(() => false)
-                sub.or(() => false)
-                return sub.is.true()
+            condition.and(sub => {
+                return sub()
+                    .and(() => false)
+                    .or(() => false)
+                    .is.true()
             })
 
             condition.or(() => false)
@@ -93,10 +92,11 @@ describe('Condition', () => {
         it('(false || false) || true', () => {
             const condition = new Condition()
 
-            condition.and((sub) => {
-                sub.and(() => false)
-                sub.or(() => false)
-                return sub.is.true()
+            condition.and(sub => {
+                return sub()
+                    .and(() => false)
+                    .or(() => false)
+                    .is.true()
             })
 
             condition.or(() => true)

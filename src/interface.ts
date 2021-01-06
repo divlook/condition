@@ -1,7 +1,7 @@
 import { Condition } from './condition'
 
 export interface ConditionCallback {
-    (operators: Condition): boolean
+    (sub: (condition?: ConditionCallback) => Condition): boolean
 }
 
 export interface ConditionOperator {
