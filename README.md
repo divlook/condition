@@ -8,9 +8,10 @@ v1.0.0 이전까지는 github 패키지 사용 예정
 
 ```bash
 # npm login --scope=@divlook --registry=https://npm.pkg.github.com
-# yarn npm login --scope=@divlook --registry=https://npm.pkg.github.com
-
 npm install @divlook/ifjs
+
+# yarn npm login --scope=@divlook --registry=https://npm.pkg.github.com
+yarn add @divlook/ifjs
 ```
 
 ## Usage
