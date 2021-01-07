@@ -10,12 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: develop
 
       - name: main -> develop
-        run: git merge origin/main
-
-      - name: push
-        if: success()
-        run: git push
+        uses: robotology/gh-action-nightly-merge@v1.3.1
+        with:
+          stable_branch: 'main'
+          development_branch: 'develop'
+          allow_ff: true
+          user_name: uihyeon.cha
+          user_email: uihyeon.cha@gmail.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
