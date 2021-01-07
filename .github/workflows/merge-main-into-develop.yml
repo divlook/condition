@@ -1,0 +1,21 @@
+name: Merge main into develop
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+
+      - name: main -> develop
+        run: git merge main
+
+      - name: push
+        if: success()
+        run: git push
