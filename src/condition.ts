@@ -13,7 +13,7 @@ export class Condition {
     get is() {
         return {
             true: () => this.true(),
-            false: () => this.false()
+            false: () => this.false(),
         }
     }
 
@@ -53,7 +53,7 @@ export class Condition {
         for (const operator of this.pipe) {
             const IS_AND = operator.type === 'and'
             const IS_OR = operator.type === 'or'
-            const value = await operator.callback(condition => {
+            const value = await operator.callback((condition) => {
                 return new Condition(condition)
             })
 

@@ -1,5 +1,8 @@
 # README
 
+![Auto Release](https://github.com/divlook/ifjs/workflows/Auto%20Release/badge.svg)
+![CI](https://github.com/divlook/ifjs/workflows/CI/badge.svg)
+
 A nice conditional statement
 
 ## Install

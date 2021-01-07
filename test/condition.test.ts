@@ -59,7 +59,7 @@ describe('Condition', () => {
         it('(true || false) && false', async () => {
             const condition = new Condition()
 
-            condition.and(sub => {
+            condition.and((sub) => {
                 return sub(() => true)
                     .or(() => false)
                     .is.true()
@@ -73,7 +73,7 @@ describe('Condition', () => {
         it('(false || false) && false', async () => {
             const condition = new Condition()
 
-            condition.and(sub => {
+            condition.and((sub) => {
                 return sub()
                     .and(() => false)
                     .or(() => false)
@@ -88,7 +88,7 @@ describe('Condition', () => {
         it('(false || false) || true', async () => {
             const condition = new Condition()
 
-            condition.and(sub => {
+            condition.and((sub) => {
                 return sub(() => false)
                     .or(() => false)
                     .is.true()
@@ -102,13 +102,13 @@ describe('Condition', () => {
 
     describe('Async', () => {
         it('Promise', async () => {
-            const condition = new Condition(sub => {
+            const condition = new Condition((sub) => {
                 return sub()
                     .and(() => true)
                     .and(() => Promise.resolve(true))
                     .and(
                         () =>
-                            new Promise(resolve => {
+                            new Promise((resolve) => {
                                 setTimeout(() => resolve(true), 1000)
                             })
                     )
