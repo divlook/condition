@@ -82,3 +82,22 @@ const condition = new Condition(() => {
 
 await condition.is.true()
 ```
+
+## Command
+
+```bash
+# 빌드
+yarn run build
+
+# 파일이 변경될 때마다 빌드 실행
+yarn run start
+
+# 테스트
+yarn run test
+
+# 파일이 변경될 때마다 테스트
+yarn run test:watch
+
+# github package에 배포
+yarn run pkg:github
+```
