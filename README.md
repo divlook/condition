@@ -66,3 +66,19 @@ condition.and(() => false)
 
 await condition.is.false()
 ```
+
+### Async
+
+```ts
+import { Condition } from '@divlook/ifjs'
+
+const condition = new Condition(() => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(true)
+        }, 2000)
+    })
+})
+
+await condition.is.true()
+```
